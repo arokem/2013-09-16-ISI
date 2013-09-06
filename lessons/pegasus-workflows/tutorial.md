@@ -1,8 +1,8 @@
 ---
 layout: lesson
 root: ../..
-github_username: your_user_id
-bootcamp_slug: yyyy-mm-dd-site
+github_username: vahi
+bootcamp_slug:  2013-09-16-ISI
 title: Executing Workflows using Pegasus WMS
 ---
 **Based on material by Karan Vahi and Gideon Juve**
