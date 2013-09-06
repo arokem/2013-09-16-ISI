@@ -133,11 +133,11 @@ $ more diamond.dax
 There are three information catalogs that Pegasus uses when planning
 the workflow. These are the:
 
-1. Site Catalog
-2. Transformation Catalog
-3. Replica Catalog
+1. [Site Catalog](#catalog_sc)
+2. [Transformation Catalog](#catalog_tc)
+3. [Replica Catalog](#catalog_rc)
 
-### Site Catalog
+### Site Catalog <a id="catalog_sc"></a>
 
 The site catalog describes the sites where the workflow jobs are to be
 executed. Typically the sites in the site catalog describe remote
@@ -193,7 +193,7 @@ submit vanilla Condor jobs.
 
 
 
-### Transformation Catalog
+### Transformation Catalog <a id="catalog_tc"></a>
 
 The transformation catalog describes all of the executables (called
 "transformations") used by the workflow. This description includes the
@@ -221,7 +221,7 @@ script. This script is just an example transformation that sleeps for
 input files to all of its output files. 
 
 
-### Replica Catalog
+### Replica Catalog <a id="catalog_rc"></a>
 
 The final catalog is the Replica Catalog. This catalog tells Pegasus
 where to find each of the input files for the workflow. 
