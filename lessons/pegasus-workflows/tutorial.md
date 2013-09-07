@@ -5,7 +5,7 @@ github_username: arokem
 bootcamp_slug:  2013-09-16-ISI
 title: Executing Workflows using Pegasus WMS
 ---
-**Based on material by Karan Vahi and Gideon Juve**
+**Material by Karan Vahi and Gideon Juve**
 
 ## Pegasus WMS
 
@@ -98,10 +98,11 @@ to Pegasus, you can contact the Pegasus Users mailing list at
 In order to reduce the amount of work required to get started we have
 provided several virtual machines that contain all of the software
 required for this tutorial. Virtual machine images are provided for
-VirtualBox. Information about deploying the
-tutorial VM on these platforms is in the appendix. Please go to the
-appendix for the platform you are using and follow the instructions
-for starting the VM found there before continuing with this tutorial. 
+VirtualBox. Information about starting the bootcamp VM is in the
+[Virtualbox Lesson](../virtualbox/tutorial.md). Please follow the
+instructions for starting the VM before continuing with this
+tutorial. 
+
 
 ## Generating the workflow
 
