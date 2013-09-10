@@ -718,10 +718,56 @@ Here is how a worklfow looks before and after level based job clustering.
 More details can be found in the Pegasus Documentation [here] (https://pegasus.isi.edu/wms/docs/latest/reference.php#job_clustering).
 
 
+## Data Cleanup
+
+Very often in case large workflows, users run out of disk space during
+the workflow execution.
+
+Why does it occur:
+
+* Workflows bring in huge amounts of data
+* Additional data is generated during workflow execution
+* Users don't worry about cleaning up the scratch filessytem after
+  they have run their workflow.
+
+What are the potential solutions:
+
+* Cleanup after the workflow as finished. This does not work all the
+  time as scratch space may get filled up before execution.
+
+* Interleave the cleanuo automatically during the workflow execution.
+  + This requires an analysis of the workflow to determine when a file
+  is no longer required. 
+
+The cleanup module in Pegasus adds cleanup nodes to the workflow at
+the planning time that remove datafrom the directory on the shared
+filesystem when it is no longer required by the workflow.
+
+* Pegasus also will cluster the cleanup jobs together to ensure that
+  for large workflows the workflow walltime does not increase due to
+  large number of cleanup jobs added.
+
+* This feature is used by a UCLA genomics researcher to delete TB's of
+  data automatically for his long running pipelines.
+
+
+Here is how a worklfow looks before and after adding data cleanup nodes.
+
+![Pegasus Data Cleanup](./images/concepts-data-cleanup.jpg )
+
+Using the cleanup feature, can  reducie the peak storage requirements of the workflow. 
+
+Below is an image of peak storage used by a montage worklfow with data
+cleanup enabled.
+
+![Montage Workflow with Data Cleanup](./images/concepts-montage-data-cleanup.jpg )
+
+
 
 ## Conclusion
 Congratulations! You have completed the tutorial.
-You can try the RNASeq module to do execute a real world RNASeq workflow.
+You can try the RNASeq module to do execute a real world RNASeq
+workflow. That has both job clustering and data cleanup enabled.
 
 Please contact the Pegasus Users Mailing list at
 <pegasus-users@isi.edu> if you need help. 
