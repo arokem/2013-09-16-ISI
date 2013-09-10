@@ -685,6 +685,40 @@ In this case, because the example transformation sleeps for 30
 seconds, the min, mean, and max runtimes for each of the analyze,
 findrange, and preprocess transformations are all close to 30. 
 
+## Job Clustering
+A large number of workflows executed through the Pegasus WMS, are
+composed of several jobs that run for only a few seconds or
+so. Pegasus allows you to cluster these small running jobs together
+into a larger job at runtime.
+
+Why do you want to do this:
+
+* The overhead of running any job on the grid is usually 60 seconds or
+  more. Need to make this overhead worthwhile. Ideally the users
+  should run a job that takes at least 10 minutes to execute.
+
+* Clustered tasks can reuse common input data - less data transfers.
+
+
+Supported Job Clustering Techniques
+
+* Level Based    - cluster jobs on the same level based on user  provided parameters i.e number of clusters to be created.
+* Runtime Based  - cluster based on runtime of the jobs. users specify
+  the expected runtime for the clustered job, and Pegasus does the
+  binning per level.
+* Label Based    - user labels the sub graphs that they want clustered
+  into a single job in the DAX.
+
+To enable clustering in pegasus pass the **--cluster** option to pegasus-plan.
+
+Here is how a worklfow looks before and after level based job clustering.
+
+![Pegasus Job Clustering](./images/concepts-job-clustering.jpg )
+
+More details can be found in the Pegasus Documentation [here] (https://pegasus.isi.edu/wms/docs/latest/reference.php#job_clustering).
+
+
+
 ## Conclusion
 Congratulations! You have completed the tutorial.
 You can try the RNASeq module to do execute a real world RNASeq workflow.
