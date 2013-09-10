@@ -109,7 +109,7 @@ tutorial.
 We will be creating and running a simple diamond-shaped workflow that
 looks like this: 
 
-![Diamond Workflow](./images/concepts-diamond.jpg )
+![Diamond Workflow](./images/concepts-diamond.jpg "Diamond Input Workflow")
 
 The *shell* is a program that presents a command line interface
 which allows you to control your computer using commands entered
@@ -399,7 +399,7 @@ submit and monitor the workflow are stored.
 This is what the diamond workflow looks like after Pegasus has
 finished planning the DAX: 
 
-![Diamond DAG](./images/concepts-diamond-dag.png )
+![Diamond DAG](./images/concepts-diamond-dag.png "Diamond DAG planned  by Pegasus")
 
 
 ##  Submitting the Workflow
@@ -713,7 +713,7 @@ To enable clustering in pegasus pass the **--cluster** option to pegasus-plan.
 
 Here is how a worklfow looks before and after level based job clustering.
 
-![Pegasus Job Clustering](./images/concepts-job-clustering.jpg )
+![Pegasus Job Clustering](./images/concepts-job-clustering.jpg "Pegasus Job Clustering)
 
 More details can be found in the Pegasus Documentation [here] (https://pegasus.isi.edu/wms/docs/latest/reference.php#job_clustering).
 
@@ -753,14 +753,15 @@ filesystem when it is no longer required by the workflow.
 
 Here is how a worklfow looks before and after adding data cleanup nodes.
 
-![Pegasus Data Cleanup](./images/concepts-data-cleanup.jpg )
+![Pegasus Data Cleanup](./images/concepts-data-cleanup.jpg "Workflow with Data Cleanup Nodes")
 
 Using the cleanup feature, can  reducie the peak storage requirements of the workflow. 
 
 Below is an image of peak storage used by a montage worklfow with data
 cleanup enabled.
 
-![Montage Workflow with Data Cleanup](./images/concepts-montage-data-cleanup.jpg )
+![Montage Workflow with Data
+ Cleanup](./images/concepts-montage-data-cleanup.jpg  "Timeline of Montage Workflow with Data Cleanup Enabled")
 
 
 
