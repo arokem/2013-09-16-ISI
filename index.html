@@ -1,21 +1,27 @@
 ---
 layout: bootcamp
 root: .
-venue: ISI, University of Southern California 
+venue: University of Southern California 
 country: United-States
 address: Davidson Continuing Education Conference Center, 3415 S Figueroa St., Los Angeles
 humandate: September 16-17, 2013
 humantime: 8:30 am - 4:30 pm
 startdate: 2013-09-16
 enddate: 2013-09-17
-latlng: 34.020493, 118.281233
+latlng: 34.020493, -118.281233
 registration: restricted
-instructor: ["Ariel Rokem", "Matt Terry"]
+instructor: ["Ariel Rokem", "Matt Terry", "John Mehringer", "Karan Vahi"]
 contact: admin@software-carpentry.org
 ---
 {% include bootcamps/instructors.html %}
 {% include bootcamps/what.html %}
 {% include bootcamps/who.html %}
+
+<p>
+  Enrolment in this bootcamp is restricted to USC Faculty, Staff and Students.
+  Please use our <a href="http://usc-softwarecarpentry.eventbrite.ca/">Eventbrite site</a> for registration.
+</p>
+
 {% include bootcamps/requirements.html %}
 {% include bootcamps/python.html %}
 {% include bootcamps/contact.html %}
@@ -32,6 +38,9 @@ contact: admin@software-carpentry.org
   <div class="span6">
     {% include setup/overview-git.html %}
     {% include setup/overview-python.html %}
+  </div>
+  <div class="span6">
+    {% include setup/vm.html %}
   </div>
 </div>
 
