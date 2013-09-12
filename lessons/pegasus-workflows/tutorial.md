@@ -483,7 +483,7 @@ transformations in the workflow and shows all of the executables that
 were invoked by the workflow: 
 
 ```
-$ more output/f.d
+$ more outputs/f.d
 /home/tutorial/bin/analyze:
 /home/tutorial/bin/findrange:
 /home/tutorial/bin/preprocess:
@@ -567,7 +567,7 @@ the runtime of the workflow and its jobs. The -s all argument tells
 the program to generate all statistics it knows how to calculate: 
 
 ```
-$ pegasus-statistics –s all submit/tutorial/pegasus/diamond/run0001
+$ pegasus-statistics -s all submit/tutorial/pegasus/diamond/run0001
 
 **************************SUMMARY******************************
 # legends
