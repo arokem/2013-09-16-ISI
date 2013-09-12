@@ -80,8 +80,8 @@ Click "Continue" again to get to the "Virtual Hard Disk" step:
 
 Choose "Use existing hard disk". Click
 the folder icon and locate the .vmdk file that you downloaded
-earlier and click OK. You will see now a rnaseq.vmdk under the SATA
-controller. Click OK.
+earlier and click OK. There will be multiple vmdk files in the vm
+folder. You will need to select PegasusTutorialVM-4.3.vmdk file.
 
 
 When you have selected the .vmdk file, choose "Open" and then click
