@@ -202,11 +202,10 @@ script that has all of the arguments required for the RSEQFlow EE
 workflow: 
 
 ```
-$ ./plan_dax.sh diamond.dax
 [tutorial@localhost ee]$ ./run_dax.sh rseq-tutorial.dax
 Planning Pegasus workflow
 
-+ pegasus-plan -Dpegasus.catalog.replica.directory.site=condor_pool --dax rseq-tutorial.dax --dir dags --conf properties --sites condor_pool --nocleanup --cluster horizontal --output-site local --input-dir data --submit
++ pegasus-plan -Dpegasus.catalog.replica.directory.site=condor_pool --dax rseq-tutorial.dax --dir submit --conf properties --sites condor_pool --nocleanup --cluster horizontal --output-site local --input-dir data --submit
 2013.09.12 21:06:13.756 EDT:   Submitting job(s). 
 2013.09.12 21:06:13.795 EDT:   1 job(s) submitted to cluster 156. 
 2013.09.12 21:06:13.853 EDT:    
@@ -221,15 +220,15 @@ Planning Pegasus workflow
 2013.09.12 21:06:13.939 EDT:    
 2013.09.12 21:06:13.949 EDT:   Your workflow has been started and is running in the base directory: 
 2013.09.12 21:06:13.958 EDT:    
-2013.09.12 21:06:13.965 EDT:     /rnaseq/ee/dags/tutorial/pegasus/expression_estimation_prefix/run0002 
+2013.09.12 21:06:13.965 EDT:     /rnaseq/ee/submit/tutorial/pegasus/expression_estimation_prefix/run0002 
 2013.09.12 21:06:13.981 EDT:    
 2013.09.12 21:06:13.995 EDT:   *** To monitor the workflow you can run *** 
 2013.09.12 21:06:14.001 EDT:    
-2013.09.12 21:06:14.010 EDT:     pegasus-status -l /rnaseq/ee/dags/tutorial/pegasus/expression_estimation_prefix/run0002 
+2013.09.12 21:06:14.010 EDT:     pegasus-status -l /rnaseq/ee/submit/tutorial/pegasus/expression_estimation_prefix/run0002 
 2013.09.12 21:06:14.016 EDT:    
 2013.09.12 21:06:14.021 EDT:   *** To remove your workflow run *** 
 2013.09.12 21:06:14.053 EDT:    
-2013.09.12 21:06:14.059 EDT:     pegasus-remove /rnaseq/ee/dags/tutorial/pegasus/expression_estimation_prefix/run0002 
+2013.09.12 21:06:14.059 EDT:     pegasus-remove /rnaseq/ee/submit/tutorial/pegasus/expression_estimation_prefix/run0002 
 2013.09.12 21:06:14.069 EDT:    
 2013.09.12 21:06:15.369 EDT:   Time taken to execute is 5.26 seconds 
 
@@ -254,11 +253,11 @@ After the workflow has been submitted you can monitor it using the
 pegasus-status command: 
 
 ```
-[tutorial@localhost ee]$ pegasus-status  dags/tutorial/pegasus/expression_estimation_prefix/run0002/
+[tutorial@localhost ee]$ pegasus-status  submit/tutorial/pegasus/expression_estimation_prefix/run0001/
 STAT  IN_STATE  JOB                                               
 Run      10:02  expression_estimation_prefix-0                    
-Run      03:28   ┣━bowtie2_transcriptome_index_ID0000003          
-Idle     03:11   ┗━annotation_ID0000006                           
+Run      03:28   |--bowtie2_transcriptome_index_ID0000003          
+Idle     03:11   |--annotation_ID0000006                           
 Summary: 3 Condor jobs total (I:1 R:2)
 
 UNREADY   READY     PRE  QUEUED    POST SUCCESS FAILURE %DONE
@@ -297,6 +296,6 @@ transformations in the workflow and shows all of the executables that
 were invoked by the workflow: 
 
 ```
-$ more output/f.d
+$ ls -lht outputs/
 
 ```
