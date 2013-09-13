@@ -9,7 +9,7 @@ title: RNASeq Workflow Module
 
 ## RNASeq Project
 
-**To be updated by Andrew and Jim ????**
+**@@@To be updated by Andrew and Jim@@@**
 
 The [RSeqFlow](http://genomics.isi.edu) is an RNA-Seq analysis
 pipeline, which offers an express implementation of analysis steps. It
@@ -39,7 +39,7 @@ results, such as, methods used, machine calibrations and parameters,
 services and databases accessed, data sets used, etc. 
 
 The Pegasus Workflow Management Service was adopted to manage the
-workflow’s operations. It helps workflow execute in different kinds of
+workflow's operations. It helps workflow execute in different kinds of
 different environments including desktops, campus clusters, grids, and
 clouds. The Pegasus was deployed in Virtual Machine, which exempted
 users from complex installation and configuration. If users want to
@@ -51,7 +51,7 @@ This tutorial walks through the steps of creating and running the
 has the input dataset for the tutorial workflow and all the
 executables preinstalled. 
 
-**Need information on the EE pipeline, what it does????.**
+**@@@Andrew: Need information on the EE pipeline, what it does@@@.**
 
 
 The schematic of the EE pipeline is shown below
@@ -322,7 +322,7 @@ other. After about 20 minutes you will see:
 ```
 (no matching jobs found in Condor Q)
 UNREADY   READY     PRE  QUEUED    POST SUCCESS FAILURE %DONE
-      0       0       0       0       0       8       0 100.0
+      0       0       0       0       0     162       0 100.0
 Summary: 1 DAG total (Success:1)
 ```
 
@@ -336,5 +336,88 @@ were invoked by the workflow:
 
 ```
 $ ls -lht outputs/
+-rw-r--r-- 1 tutorial tutorial  111 Sep 13 01:36 outputs/prefix_whole_JunctionExpressionLevel_unique.txt
+-rw-r--r-- 1 tutorial tutorial 2.1M Sep 13 01:36 outputs/prefix_whole_ExonExpressionLevel_unique.txt
+-rw-r--r-- 1 tutorial tutorial 278K Sep 13 01:36 outputs/prefix_whole_GeneExpressionLevel_unique.txt
+-rw-r--r-- 1 tutorial tutorial    0 Sep 13 01:28 outputs/prefix_without_genome.txt
+-rw-r--r-- 1 tutorial tutorial   29 Sep 13 01:27 outputs/prefix_SEP034_AAGGGA_L002_R1-75Kreads.fastq
+```
+
+Of these the first three files (with prefix prefix_whole_) will be of
+interest to the scientists.
+
+## Collecting Statistics
+
+The pegasus-statistics command can be used to gather statistics about
+the runtime of the workflow and its jobs. The -s all argument tells
+the program to generate all statistics it knows how to calculate: 
 
 ```
+[tutorial@localhost ee]$ pegasus-statistics -s all submit/tutorial/pegasus/expression_estimation_prefix/run0001/
+
+#
+# Pegasus Workflow Management System - http://pegasus.isi.edu
+#
+# Workflow summary:
+#   Summary of the workflow execution. It shows total
+#   tasks/jobs/sub workflows run, how many succeeded/failed etc.
+#   In case of hierarchical workflow the calculation shows the
+#   statistics across all the sub workflows.It shows the following
+#   statistics about tasks, jobs and sub workflows.
+#     * Succeeded - total count of succeeded tasks/jobs/sub workflows.
+#     * Failed - total count of failed tasks/jobs/sub workflows.
+#     * Incomplete - total count of tasks/jobs/sub workflows that are
+#       not in succeeded or failed state. This includes all the jobs
+#       that are not submitted, submitted but not completed etc. This
+#       is calculated as  difference between 'total' count and sum of
+#       'succeeded' and 'failed' count.
+#     * Total - total count of tasks/jobs/sub workflows.
+#     * Retries - total retry count of tasks/jobs/sub workflows.
+#     * Total+Retries - total count of tasks/jobs/sub workflows executed
+#       during workflow run. This is the cumulative of retries,
+#       succeeded and failed count.
+# Workflow wall time:
+#   The walltime from the start of the workflow execution to the end as
+#   reported by the DAGMAN.In case of rescue dag the value is the
+#   cumulative of all retries.
+# Workflow cumulative job wall time:
+#   The sum of the walltime of all jobs as reported by kickstart.
+#   In case of job retries the value is the cumulative of all retries.
+#   For workflows having sub workflow jobs (i.e SUBDAG and SUBDAX jobs),
+#   the walltime value includes jobs from the sub workflows as well.
+# Cumulative job walltime as seen from submit side:
+#   The sum of the walltime of all jobs as reported by DAGMan.
+#   This is similar to the regular cumulative job walltime, but includes
+#   job management overhead and delays. In case of job retries the value
+#   is the cumulative of all retries. For workflows having sub workflow
+#   jobs (i.e SUBDAG and SUBDAX jobs), the walltime value includes jobs
+#   from the sub workflows as well.
+------------------------------------------------------------------------------
+Type           Succeeded Failed  Incomplete  Total     Retries   Total+Retries
+Tasks          209       0       0           209       0         209          
+Jobs           161       0       0           161       0         161          
+Sub-Workflows  0         0       0           0         0         0            
+------------------------------------------------------------------------------
+
+Workflow wall time                               : 11 mins, 18 secs
+Workflow cumulative job wall time                : 7 mins, 22 secs
+Cumulative job walltime as seen from submit side : 8 mins, 43 secs
+
+Summary                       : submit/tutorial/pegasus/expression_estimation_prefix/run0001/statistics/summary.txt
+Workflow execution statistics : submit/tutorial/pegasus/expression_estimation_prefix/run0001/statistics/workflow.txt
+Job instance statistics       : submit/tutorial/pegasus/expression_estimation_prefix/run0001/statistics/jobs.txt
+Transformation statistics     : submit/tutorial/pegasus/expression_estimation_prefix/run0001/statistics/breakdown.txt
+Time statistics               : submit/tutorial/pegasus/expression_estimation_prefix/run0001/statistics/time.txt
+```
+
+Note: If the memory intensive job had been enabled, the walltime would
+be much longer.
+
+## Conclusion
+Congratulations! You have completed the tutorial. For more information
+on the pipeline, please contact 
+
+
+Please contact the Pegasus Users Mailing list at
+<rseqflow@isi.edu> if you need help. 
+
