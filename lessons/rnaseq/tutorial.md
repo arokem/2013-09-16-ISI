@@ -9,7 +9,7 @@ title: RNASeq Workflow Module
 
 ## RNASeq Project
 
-**To be updated by Andrew and Jim ????**
+**@@@To be updated by Andrew and Jim@@@**
 
 The [RSeqFlow](http://genomics.isi.edu) is an RNA-Seq analysis
 pipeline, which offers an express implementation of analysis steps. It
@@ -39,7 +39,7 @@ results, such as, methods used, machine calibrations and parameters,
 services and databases accessed, data sets used, etc. 
 
 The Pegasus Workflow Management Service was adopted to manage the
-workflow’s operations. It helps workflow execute in different kinds of
+workflow's operations. It helps workflow execute in different kinds of
 different environments including desktops, campus clusters, grids, and
 clouds. The Pegasus was deployed in Virtual Machine, which exempted
 users from complex installation and configuration. If users want to
@@ -51,7 +51,7 @@ This tutorial walks through the steps of creating and running the
 has the input dataset for the tutorial workflow and all the
 executables preinstalled. 
 
-**Need information on the EE pipeline, what it does????.**
+**@@@Andrew: Need information on the EE pipeline, what it does@@@.**
 
 
 The schematic of the EE pipeline is shown below
@@ -122,10 +122,10 @@ argumetns to the workflow generator for the canned example.
 
 ```
 cd /rnaseq/ee/
- ./generate_dax.sh rseq-tutorial.dax
+ ./generate_dax.sh rnaseq.dax
 Generating Pegasus DAX
 
-+ expression_estimation.py --output-prefix prefix --unique --fastq SEP034_AAGGGA_L002_R1-75Kreads.fastq --transcriptome ucsc_gencode.v14_transcripts.fa --annotation GENCODE_V14_annotation.gtf --bin-dir bin --dax rseq-tutorial.dax --verbose
++ expression_estimation.py --output-prefix prefix --unique --fastq SEP034_AAGGGA_L002_R1-75Kreads.fastq --transcriptome ucsc_gencode.v14_transcripts.fa --annotation GENCODE_V14_annotation.gtf --bin-dir bin --dax rnaseq.dax --verbose
 2013-09-12 20:04:10,237 - Chromosomes included X, Y, M, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22
 2013-09-12 20:04:10,237 - Add jobs to check input files
 2013-09-12 20:04:10,238 - Add jobs to split files by chromosomes
@@ -169,7 +169,7 @@ dependencies.  Lets look at the generated DAX for the workflow
 
 
 ```
-more rseq-tutorial.dax 
+more rnaseq.dax 
 ...
 ```
 
@@ -191,8 +191,6 @@ added by Pegasus when the DAX is planned to an executable workflow.
 
 ## Running the workflow in the VM
 
-### Plan the generated workflow to an executable workflow.
-
 The planning stage is where Pegasus maps the abstract DAX to one or
 more execution sites. 
 
@@ -202,10 +200,10 @@ script that has all of the arguments required for the RSEQFlow EE
 workflow: 
 
 ```
-[tutorial@localhost ee]$ ./run_dax.sh rseq-tutorial.dax
+[tutorial@localhost ee]$ ./run_dax.sh rnaseq.dax
 Planning Pegasus workflow
 
-+ pegasus-plan -Dpegasus.catalog.replica.directory.site=condor_pool --dax rseq-tutorial.dax --dir submit --conf properties --sites condor_pool --nocleanup --cluster horizontal --output-site local --input-dir data --submit
++ pegasus-plan -Dpegasus.catalog.replica.directory.site=condor_pool --dax rnaseq.dax --dir submit --conf properties --sites condor_pool --nocleanup --cluster horizontal --output-site local --input-dir data --submit
 2013.09.12 21:06:13.756 EDT:   Submitting job(s). 
 2013.09.12 21:06:13.795 EDT:   1 job(s) submitted to cluster 156. 
 2013.09.12 21:06:13.853 EDT:    
@@ -241,11 +239,52 @@ configuration file (--conf), the DAX file (-d), the submit directory
 input files are (--input-dir),  the output site (-o) and (--submit) to
 submit the workflow for execution. For this workflow, (--cluster)
 option is also enabled that allows us to cluster the short running
-jobs (unique::exon_expression_level,
-unique::junction_expression_level, unique::gene_expression_level)
+jobs (unique::exon\_expression\_level,
+unique::junction\_expression\_level, unique::gene\_expression\_level)
 together. 
 
 
+### Memory intensive jobs
+
+For the purposes of this workshop, the basecase for the VM is to run
+the tutorial in 512MB RAM. The workflow has the bowtie transcriptome
+index job that requires about 4GB of RAM to create an index from the
+reference files. 
+
+Hence, for this tutorial the index files are alredy present in the
+input directory.
+
+```
+[tutorial@localhost ee]$ ls -lht /rnaseq/ee/data/
+total 731M
+-rw-rw-r-- 1 tutorial tutorial  75M Sep 12 22:44 ucsc_gencode.v14_transcripts.rev.1.bt2
+-rw-rw-r-- 1 tutorial tutorial  44M Sep 12 22:44 ucsc_gencode.v14_transcripts.rev.2.bt2
+-rw-rw-r-- 1 tutorial tutorial  75M Sep 12 22:33 ucsc_gencode.v14_transcripts.1.bt2
+-rw-rw-r-- 1 tutorial tutorial  44M Sep 12 22:33 ucsc_gencode.v14_transcripts.2.bt2
+-rw-rw-r-- 1 tutorial tutorial 815K Sep 12 22:22 ucsc_gencode.v14_transcripts.3.bt2
+-rw-rw-r-- 1 tutorial tutorial  44M Sep 12 22:22 ucsc_gencode.v14_transcripts.4.bt2
+-rw-rw-r-- 1 tutorial tutorial  19M Sep 11 14:29 SEP034_AAGGGA_L002_R1-75Kreads.fastq
+-rw-r--r-- 1 tutorial tutorial 243M Jun 12 16:47 GENCODE_V14_annotation.gtf
+-rw-r--r-- 1 tutorial tutorial 190M Jun 12 16:47 ucsc_gencode.v14_transcripts.fa
+```
+
+The presence of the bt2 files enables Pegasus to skip the
+bowtie2_transcriptome_index_ID0000003 job as the outputs for it
+already exist.
+
+When you ran rundax.sh in the log you would have seen the following:
+
+```
+2013.09.13 00:15:36.802 EDT: [INFO] event.pegasus.reduce dax.id expression_estimation_prefix_0  - STARTED 
+2013.09.13 00:15:36.824 EDT: [INFO]  Nodes/Jobs Deleted from the Workflow during reduction  
+2013.09.13 00:15:36.825 EDT: [INFO]  	bowtie2_transcriptome_index_ID0000003 
+2013.09.13 00:15:36.825 EDT: [INFO]  Nodes/Jobs Deleted from the Workflow during reduction  - DONE 
+```
+
+Details about Pegasus Data Reuse can be found [here] (http://pegasus.isi.edu/wms/docs/latest/running_workflows.php#idp18613248).
+
+If you want the index to be created from the reference files as part of
+the workflow simply remove the .bt2 files from the  /rnaseq/ee/data/ directory.
 
 ## Monitoring the Workflow
 
@@ -256,12 +295,12 @@ pegasus-status command:
 [tutorial@localhost ee]$ pegasus-status  submit/tutorial/pegasus/expression_estimation_prefix/run0001/
 STAT  IN_STATE  JOB                                               
 Run      10:02  expression_estimation_prefix-0                    
-Run      03:28   |--bowtie2_transcriptome_index_ID0000003          
-Idle     03:11   |--annotation_ID0000006                           
+Run      03:28   |--without_genome_ID0000001
+Idle     03:11   |--stage_out_remote_condor_pool_0_0                             
 Summary: 3 Condor jobs total (I:1 R:2)
 
 UNREADY   READY     PRE  QUEUED    POST SUCCESS FAILURE %DONE
-    158       0       0       3       0       7       0   4.2
+    154       0       0       3       0       5       0   3.1
 Summary: 1 DAG total (Running:1)
 ```
 
@@ -273,7 +312,7 @@ the jobs in the workflow that have finished successfully.
 Use the watch option  to continuously monitor the workflow:
 
 ```
-$  pegasus-status -w submit/tutorial/pegasus/diamond/run0001
+$  pegasus-status -w submit/tutorial/pegasus/expression_estimation_prefix/run0001/
 ...
 ```
 
@@ -283,7 +322,7 @@ other. After about 20 minutes you will see:
 ```
 (no matching jobs found in Condor Q)
 UNREADY   READY     PRE  QUEUED    POST SUCCESS FAILURE %DONE
-      0       0       0       0       0       8       0 100.0
+      0       0       0       0       0     162       0 100.0
 Summary: 1 DAG total (Success:1)
 ```
 
@@ -297,5 +336,88 @@ were invoked by the workflow:
 
 ```
 $ ls -lht outputs/
+-rw-r--r-- 1 tutorial tutorial  111 Sep 13 01:36 outputs/prefix_whole_JunctionExpressionLevel_unique.txt
+-rw-r--r-- 1 tutorial tutorial 2.1M Sep 13 01:36 outputs/prefix_whole_ExonExpressionLevel_unique.txt
+-rw-r--r-- 1 tutorial tutorial 278K Sep 13 01:36 outputs/prefix_whole_GeneExpressionLevel_unique.txt
+-rw-r--r-- 1 tutorial tutorial    0 Sep 13 01:28 outputs/prefix_without_genome.txt
+-rw-r--r-- 1 tutorial tutorial   29 Sep 13 01:27 outputs/prefix_SEP034_AAGGGA_L002_R1-75Kreads.fastq
+```
+
+Of these the first three files (with prefix prefix_whole_) will be of
+interest to the scientists.
+
+## Collecting Statistics
+
+The pegasus-statistics command can be used to gather statistics about
+the runtime of the workflow and its jobs. The -s all argument tells
+the program to generate all statistics it knows how to calculate: 
 
 ```
+[tutorial@localhost ee]$ pegasus-statistics -s all submit/tutorial/pegasus/expression_estimation_prefix/run0001/
+
+#
+# Pegasus Workflow Management System - http://pegasus.isi.edu
+#
+# Workflow summary:
+#   Summary of the workflow execution. It shows total
+#   tasks/jobs/sub workflows run, how many succeeded/failed etc.
+#   In case of hierarchical workflow the calculation shows the
+#   statistics across all the sub workflows.It shows the following
+#   statistics about tasks, jobs and sub workflows.
+#     * Succeeded - total count of succeeded tasks/jobs/sub workflows.
+#     * Failed - total count of failed tasks/jobs/sub workflows.
+#     * Incomplete - total count of tasks/jobs/sub workflows that are
+#       not in succeeded or failed state. This includes all the jobs
+#       that are not submitted, submitted but not completed etc. This
+#       is calculated as  difference between 'total' count and sum of
+#       'succeeded' and 'failed' count.
+#     * Total - total count of tasks/jobs/sub workflows.
+#     * Retries - total retry count of tasks/jobs/sub workflows.
+#     * Total+Retries - total count of tasks/jobs/sub workflows executed
+#       during workflow run. This is the cumulative of retries,
+#       succeeded and failed count.
+# Workflow wall time:
+#   The walltime from the start of the workflow execution to the end as
+#   reported by the DAGMAN.In case of rescue dag the value is the
+#   cumulative of all retries.
+# Workflow cumulative job wall time:
+#   The sum of the walltime of all jobs as reported by kickstart.
+#   In case of job retries the value is the cumulative of all retries.
+#   For workflows having sub workflow jobs (i.e SUBDAG and SUBDAX jobs),
+#   the walltime value includes jobs from the sub workflows as well.
+# Cumulative job walltime as seen from submit side:
+#   The sum of the walltime of all jobs as reported by DAGMan.
+#   This is similar to the regular cumulative job walltime, but includes
+#   job management overhead and delays. In case of job retries the value
+#   is the cumulative of all retries. For workflows having sub workflow
+#   jobs (i.e SUBDAG and SUBDAX jobs), the walltime value includes jobs
+#   from the sub workflows as well.
+------------------------------------------------------------------------------
+Type           Succeeded Failed  Incomplete  Total     Retries   Total+Retries
+Tasks          209       0       0           209       0         209          
+Jobs           161       0       0           161       0         161          
+Sub-Workflows  0         0       0           0         0         0            
+------------------------------------------------------------------------------
+
+Workflow wall time                               : 11 mins, 18 secs
+Workflow cumulative job wall time                : 7 mins, 22 secs
+Cumulative job walltime as seen from submit side : 8 mins, 43 secs
+
+Summary                       : submit/tutorial/pegasus/expression_estimation_prefix/run0001/statistics/summary.txt
+Workflow execution statistics : submit/tutorial/pegasus/expression_estimation_prefix/run0001/statistics/workflow.txt
+Job instance statistics       : submit/tutorial/pegasus/expression_estimation_prefix/run0001/statistics/jobs.txt
+Transformation statistics     : submit/tutorial/pegasus/expression_estimation_prefix/run0001/statistics/breakdown.txt
+Time statistics               : submit/tutorial/pegasus/expression_estimation_prefix/run0001/statistics/time.txt
+```
+
+Note: If the memory intensive job had been enabled, the walltime would
+be much longer.
+
+## Conclusion
+Congratulations! You have completed the tutorial. For more information
+on the pipeline, please contact 
+
+
+Please contact the Pegasus Users Mailing list at
+<rseqflow@isi.edu> if you need help. 
+
