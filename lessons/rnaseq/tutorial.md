@@ -122,10 +122,10 @@ argumetns to the workflow generator for the canned example.
 
 ```
 cd /rnaseq/ee/
- ./generate_dax.sh rseq-tutorial.dax
+ ./generate_dax.sh rnaseq.dax
 Generating Pegasus DAX
 
-+ expression_estimation.py --output-prefix prefix --unique --fastq SEP034_AAGGGA_L002_R1-75Kreads.fastq --transcriptome ucsc_gencode.v14_transcripts.fa --annotation GENCODE_V14_annotation.gtf --bin-dir bin --dax rseq-tutorial.dax --verbose
++ expression_estimation.py --output-prefix prefix --unique --fastq SEP034_AAGGGA_L002_R1-75Kreads.fastq --transcriptome ucsc_gencode.v14_transcripts.fa --annotation GENCODE_V14_annotation.gtf --bin-dir bin --dax rnaseq.dax --verbose
 2013-09-12 20:04:10,237 - Chromosomes included X, Y, M, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22
 2013-09-12 20:04:10,237 - Add jobs to check input files
 2013-09-12 20:04:10,238 - Add jobs to split files by chromosomes
@@ -169,7 +169,7 @@ dependencies.  Lets look at the generated DAX for the workflow
 
 
 ```
-more rseq-tutorial.dax 
+more rnaseq.dax 
 ...
 ```
 
@@ -191,8 +191,6 @@ added by Pegasus when the DAX is planned to an executable workflow.
 
 ## Running the workflow in the VM
 
-### Plan the generated workflow to an executable workflow.
-
 The planning stage is where Pegasus maps the abstract DAX to one or
 more execution sites. 
 
@@ -202,10 +200,10 @@ script that has all of the arguments required for the RSEQFlow EE
 workflow: 
 
 ```
-[tutorial@localhost ee]$ ./run_dax.sh rseq-tutorial.dax
+[tutorial@localhost ee]$ ./run_dax.sh rnaseq.dax
 Planning Pegasus workflow
 
-+ pegasus-plan -Dpegasus.catalog.replica.directory.site=condor_pool --dax rseq-tutorial.dax --dir submit --conf properties --sites condor_pool --nocleanup --cluster horizontal --output-site local --input-dir data --submit
++ pegasus-plan -Dpegasus.catalog.replica.directory.site=condor_pool --dax rnaseq.dax --dir submit --conf properties --sites condor_pool --nocleanup --cluster horizontal --output-site local --input-dir data --submit
 2013.09.12 21:06:13.756 EDT:   Submitting job(s). 
 2013.09.12 21:06:13.795 EDT:   1 job(s) submitted to cluster 156. 
 2013.09.12 21:06:13.853 EDT:    
@@ -241,11 +239,52 @@ configuration file (--conf), the DAX file (-d), the submit directory
 input files are (--input-dir),  the output site (-o) and (--submit) to
 submit the workflow for execution. For this workflow, (--cluster)
 option is also enabled that allows us to cluster the short running
-jobs (unique::exon_expression_level,
-unique::junction_expression_level, unique::gene_expression_level)
+jobs (unique::exon\_expression\_level,
+unique::junction\_expression\_level, unique::gene\_expression\_level)
 together. 
 
 
+### Memory intensive jobs
+
+For the purposes of this workshop, the basecase for the VM is to run
+the tutorial in 512MB RAM. The workflow has the bowtie transcriptome
+index job that requires about 4GB of RAM to create an index from the
+reference files. 
+
+Hence, for this tutorial the index files are alredy present in the
+input directory.
+
+```
+[tutorial@localhost ee]$ ls -lht /rnaseq/ee/data/
+total 731M
+-rw-rw-r-- 1 tutorial tutorial  75M Sep 12 22:44 ucsc_gencode.v14_transcripts.rev.1.bt2
+-rw-rw-r-- 1 tutorial tutorial  44M Sep 12 22:44 ucsc_gencode.v14_transcripts.rev.2.bt2
+-rw-rw-r-- 1 tutorial tutorial  75M Sep 12 22:33 ucsc_gencode.v14_transcripts.1.bt2
+-rw-rw-r-- 1 tutorial tutorial  44M Sep 12 22:33 ucsc_gencode.v14_transcripts.2.bt2
+-rw-rw-r-- 1 tutorial tutorial 815K Sep 12 22:22 ucsc_gencode.v14_transcripts.3.bt2
+-rw-rw-r-- 1 tutorial tutorial  44M Sep 12 22:22 ucsc_gencode.v14_transcripts.4.bt2
+-rw-rw-r-- 1 tutorial tutorial  19M Sep 11 14:29 SEP034_AAGGGA_L002_R1-75Kreads.fastq
+-rw-r--r-- 1 tutorial tutorial 243M Jun 12 16:47 GENCODE_V14_annotation.gtf
+-rw-r--r-- 1 tutorial tutorial 190M Jun 12 16:47 ucsc_gencode.v14_transcripts.fa
+```
+
+The presence of the bt2 files enables Pegasus to skip the
+bowtie2_transcriptome_index_ID0000003 job as the outputs for it
+already exist.
+
+When you ran rundax.sh in the log you would have seen the following:
+
+```
+2013.09.13 00:15:36.802 EDT: [INFO] event.pegasus.reduce dax.id expression_estimation_prefix_0  - STARTED 
+2013.09.13 00:15:36.824 EDT: [INFO]  Nodes/Jobs Deleted from the Workflow during reduction  
+2013.09.13 00:15:36.825 EDT: [INFO]  	bowtie2_transcriptome_index_ID0000003 
+2013.09.13 00:15:36.825 EDT: [INFO]  Nodes/Jobs Deleted from the Workflow during reduction  - DONE 
+```
+
+Details about Pegasus Data Reuse can be found [here] (http://pegasus.isi.edu/wms/docs/latest/running_workflows.php#idp18613248).
+
+If you want the index to be created from the reference files as part of
+the workflow simply remove the .bt2 files from the  /rnaseq/ee/data/ directory.
 
 ## Monitoring the Workflow
 
@@ -256,12 +295,12 @@ pegasus-status command:
 [tutorial@localhost ee]$ pegasus-status  submit/tutorial/pegasus/expression_estimation_prefix/run0001/
 STAT  IN_STATE  JOB                                               
 Run      10:02  expression_estimation_prefix-0                    
-Run      03:28   |--bowtie2_transcriptome_index_ID0000003          
-Idle     03:11   |--annotation_ID0000006                           
+Run      03:28   |--without_genome_ID0000001
+Idle     03:11   |--stage_out_remote_condor_pool_0_0                             
 Summary: 3 Condor jobs total (I:1 R:2)
 
 UNREADY   READY     PRE  QUEUED    POST SUCCESS FAILURE %DONE
-    158       0       0       3       0       7       0   4.2
+    154       0       0       3       0       5       0   3.1
 Summary: 1 DAG total (Running:1)
 ```
 
@@ -273,7 +312,7 @@ the jobs in the workflow that have finished successfully.
 Use the watch option  to continuously monitor the workflow:
 
 ```
-$  pegasus-status -w submit/tutorial/pegasus/diamond/run0001
+$  pegasus-status -w submit/tutorial/pegasus/expression_estimation_prefix/run0001/
 ...
 ```
 
