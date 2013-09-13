@@ -78,24 +78,49 @@ Click "Continue" again to get to the "Virtual Hard Disk" step:
 
 ![ Virtual Hard Disk](./images/vm_vb_05.png )
 
-Leave "Start-up Disk" checked. Choose "Use existing hard disk". Click
+Choose "Use existing hard disk". Click
 the folder icon and locate the .vmdk file that you downloaded
-earlier. 
+earlier and click OK. There will be multiple vmdk files in the vm
+folder. You will need to select PegasusTutorialVM-4.3.vmdk file.
+
 
 When you have selected the .vmdk file, choose "Open" and then click
-"Continue" to get to the Summary page: 
-
-![ Summary](./images/vm_vb_06.png )
-
-Click "Create". You will get back to the welcome screen showing the
+"Create" . You will get back to the welcome screen showing the
 new virtual machine:
 
-![ Welcome Screen with new virtual machine](./images/vm_vb_07.png )
+![ Welcome Screen with new virtual machine](./images/vm_vb_06.png )
 
-Click on the name of the virual machine and then click "Start". After
+Before Starting the VM we need to attach the RNASeq disk to the VM.
+Click on the Settings Cog Icon to goto the settings page for the
+Pegasus Tutorial VM. Click the Storage Tab. 
+
+![Storage Tab for the Virtual Machine Setting](./images/vm_vb_07.png)
+
+There select the SATA Controller and click on add harddisk
+icon. Choose existing disk and select the choose existing disk, and
+select rnaseq.vmdk from the VM folder.
+
+**Note:  The VM won't start if you don't attach the rnaseq disk.**
+
+![Add rnaseq disk to the VM](./images/vm_vb_08.png)
+
+
+You will now see the rnaseq disk attached to the SATA controller.
+
+![Storage Tab with RNASeq disk attached to the Virtual Machine](./images/vm_vb_09.png)
+
+
+Click OK and you will get back to main Virtual Box Manager window,
+where you can see under storage the rnaseq.vmdk attached for the
+Pegasus Tutorial under the Storage setting.
+
+![Pegasus Tutorial with rnaseq attached ](./images/vm_vb_10.png)
+
+
+Click on the name of the virtual machine and then click "Start". After
 a few seconds you should get to the login screen: 
 
-![ Login Screen](./images/vm_vb_08.png )
+![ Login Screen](./images/vm_vb_11.png )
 
 Log in as user *tutorial* with password *pegasus*.
 

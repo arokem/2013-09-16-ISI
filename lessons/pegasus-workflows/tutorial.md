@@ -109,7 +109,7 @@ tutorial.
 We will be creating and running a simple diamond-shaped workflow that
 looks like this: 
 
-![Diamond Workflow](./images/concepts-diamond.jpg )
+![Diamond Workflow](./images/concepts-diamond.jpg "Diamond Input Workflow")
 
 The *shell* is a program that presents a command line interface
 which allows you to control your computer using commands entered
@@ -399,7 +399,7 @@ submit and monitor the workflow are stored.
 This is what the diamond workflow looks like after Pegasus has
 finished planning the DAX: 
 
-![Diamond DAG](./images/concepts-diamond-dag.png )
+![Diamond DAG](./images/concepts-diamond-dag.png "Diamond DAG planned  by Pegasus")
 
 
 ##  Submitting the Workflow
@@ -483,7 +483,7 @@ transformations in the workflow and shows all of the executables that
 were invoked by the workflow: 
 
 ```
-$ more output/f.d
+$ more outputs/f.d
 /home/tutorial/bin/analyze:
 /home/tutorial/bin/findrange:
 /home/tutorial/bin/preprocess:
@@ -567,7 +567,7 @@ the runtime of the workflow and its jobs. The -s all argument tells
 the program to generate all statistics it knows how to calculate: 
 
 ```
-$ pegasus-statistics –s all submit/tutorial/pegasus/diamond/run0001
+$ pegasus-statistics -s all submit/tutorial/pegasus/diamond/run0001
 
 **************************SUMMARY******************************
 # legends
@@ -685,9 +685,90 @@ In this case, because the example transformation sleeps for 30
 seconds, the min, mean, and max runtimes for each of the analyze,
 findrange, and preprocess transformations are all close to 30. 
 
+## Job Clustering
+A large number of workflows executed through the Pegasus WMS, are
+composed of several jobs that run for only a few seconds or
+so. Pegasus allows you to cluster these small running jobs together
+into a larger job at runtime.
+
+Why do you want to do this:
+
+* The overhead of running any job on the grid is usually 60 seconds or
+  more. Need to make this overhead worthwhile. Ideally the users
+  should run a job that takes at least 10 minutes to execute.
+
+* Clustered tasks can reuse common input data - less data transfers.
+
+
+Supported Job Clustering Techniques
+
+* Level Based    - cluster jobs on the same level based on user  provided parameters i.e number of clusters to be created.
+* Runtime Based  - cluster based on runtime of the jobs. users specify
+  the expected runtime for the clustered job, and Pegasus does the
+  binning per level.
+* Label Based    - user labels the sub graphs that they want clustered
+  into a single job in the DAX.
+
+To enable clustering in pegasus pass the **--cluster** option to pegasus-plan.
+
+Here is how a worklfow looks before and after level based job clustering.
+
+![Pegasus Job Clustering](./images/concepts-job-clustering.jpg "Pegasus Job Clustering)
+
+More details can be found in the Pegasus Documentation [here] (https://pegasus.isi.edu/wms/docs/latest/reference.php#job_clustering).
+
+
+## Data Cleanup
+
+Very often in case large workflows, users run out of disk space during
+the workflow execution.
+
+Why does it occur:
+
+* Workflows bring in huge amounts of data
+* Additional data is generated during workflow execution
+* Users don't worry about cleaning up the scratch filessytem after
+  they have run their workflow.
+
+What are the potential solutions:
+
+* Cleanup after the workflow as finished. This does not work all the
+  time as scratch space may get filled up before execution.
+
+* Interleave the cleanuo automatically during the workflow execution.
+  + This requires an analysis of the workflow to determine when a file
+  is no longer required. 
+
+The cleanup module in Pegasus adds cleanup nodes to the workflow at
+the planning time that remove datafrom the directory on the shared
+filesystem when it is no longer required by the workflow.
+
+* Pegasus also will cluster the cleanup jobs together to ensure that
+  for large workflows the workflow walltime does not increase due to
+  large number of cleanup jobs added.
+
+* This feature is used by a UCLA genomics researcher to delete TB's of
+  data automatically for his long running pipelines.
+
+
+Here is how a worklfow looks before and after adding data cleanup nodes.
+
+![Pegasus Data Cleanup](./images/concepts-data-cleanup.jpg "Workflow with Data Cleanup Nodes")
+
+Using the cleanup feature, can  reducie the peak storage requirements of the workflow. 
+
+Below is an image of peak storage used by a montage worklfow with data
+cleanup enabled.
+
+![Montage Workflow with Data
+ Cleanup](./images/concepts-montage-data-cleanup.jpg  "Timeline of Montage Workflow with Data Cleanup Enabled")
+
+
+
 ## Conclusion
 Congratulations! You have completed the tutorial.
-You can try the RNASeq module to do execute a real world RNASeq workflow.
+You can try the RNASeq module to do execute a real world RNASeq
+workflow. That has both job clustering and data cleanup enabled.
 
 Please contact the Pegasus Users Mailing list at
 <pegasus-users@isi.edu> if you need help. 
