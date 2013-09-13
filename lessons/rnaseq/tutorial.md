@@ -78,8 +78,8 @@ output is truncated we will add an ellipsis '...' to indicate the
 omitted output. 
 
 **If you are having trouble with this tutorial, or anything else related
-to Pegasus, you can contact the Pegasus Users mailing list at
-<pegasus-users@isi.edu> to get help.** 
+to RSEQFLOW, you can contact the Pegasus Users mailing list at
+<rseqflow@isi.edu> to get help.** 
 
 ## Getting started
 
