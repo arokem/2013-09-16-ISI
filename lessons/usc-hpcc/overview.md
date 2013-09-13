@@ -20,7 +20,7 @@ If you need more resources that what is available with the free offering, dedica
  
 
 ##Cluster Specifications:
-![Linux Cluster Racks](images/hpcc_racks.jpg)
+![HP sl250s](images/sl250s-closeup2.jpg)
 
 **Infinband Cluster**
 
@@ -46,3 +46,5 @@ If you need more resources that what is available with the free offering, dedica
 + Newest: 24 cpu cores, 48GB RAM 
 
 
+---
+**Overview** -- [Running a Job](running-a-job.html) -- [Best Practices](best-practices.html)
