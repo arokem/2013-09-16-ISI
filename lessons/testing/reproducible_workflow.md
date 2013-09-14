@@ -1,16 +1,21 @@
-Creating a Reproducible Workflow
-================================
+---
+layout: lesson
+root: ../..
+github_username: arokem
+bootcamp_slug:  2013-09-16-ISI
+title: Creating a Reproducible Workflow 
+---
 
-Introduction
-------------
+## Introduction
 
-We're now in the home stretch of the workshop - congratulations! Up to this 
-point, we've talked about how to make your code efficient (good programming 
-practice), accurate (testing), and maintainable (modularization + version 
-control). Now we're going to talk about a final and very important concept 
-known as reproducibility. Victoria Stodden has written extensively about the 
-idea of reproducibility in scientific software - you may want to look up [some 
-of her papers][1] for reference.
+We're now in the home stretch of this part of the workshop - congratulations!
+Up to this point, we've talked about how to make your code efficient (good
+programming practice), accurate (testing), and maintainable (modularization +
+version control). Now we're going to talk about a final and very important
+concept known as reproducibility. Victoria Stodden has written extensively
+about the idea of reproducibility in scientific software - you may want to look
+up [some of her papers](http://www.stanford.edu/~vcs/Papers.html
+) for reference.
 
 For our purposes, we can summarize the goal of reproducibility in two related 
 ways, one technical and one colloquial.
@@ -55,8 +60,7 @@ One final note - the workflow that we're following here is just a suggestion.
 Organizing code and data is an art, and a room of 100 scientists will give you 
 101 opinions about how to do it best. Consider the below a useful place to get 
 started, and don't hesitate to tinker and branch out as you get a better feel 
-for this process. You also might want to review [William Noble's paper][2] on 
-this topic for more ideas.
+for this process. You also might want to review [William Noble's paper](http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1000424) on this topic for more ideas.
 
 1.	Setting up the project directory
 ------------------------------------
@@ -132,7 +136,7 @@ some sort of metadata associated with it to describe where it came from, how it
 got to you, the meaning of the columns, etc. There are many formats for 
 metadata that vary from simple to very complex. If you're interested in 
 following good ecological best practices, you may want to review the 
-[Ecological Metadata Language][3] and the tool [Morpho][4] for creating 
+[Ecological Metadata Language](http://knb.ecoinformatics.org/software/eml/) and the tool [Morpho](http://knb.ecoinformatics.org/morphoportal.jsp) for creating 
 metadata files. For your own private work, make sure that, at a minimum, you 
 create a `README.txt` file that describes your data as best you can.
 
@@ -446,12 +450,3 @@ efficient and robust way to accomplish your goals.
 And that just about does it. Good luck!
 
 
-[1]:
-http://www.stanford.edu/~vcs/Papers.html
-
-[2]: 
-http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1000424
-
-[3]: http://knb.ecoinformatics.org/software/eml/
-
-[4]: http://knb.ecoinformatics.org/morphoportal.jsp
