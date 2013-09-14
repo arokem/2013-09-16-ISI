@@ -1,16 +1,22 @@
-Unit Testing and Standalone Scripts
-===================================
+---
+layout: lesson
+root: ../..
+github_username: arokem
+bootcamp_slug:  2013-09-16-ISI
+title: Unit testing and Standalone Scripts
+---
 
-Introduction
-------------
+
+# Unit Testing and Standalone Scripts
+
+## Introduction
 
 Now that you understand the basics of programming in Python, we'll move on to 
 discuss two topics in "software engineering", which are how to test your code 
 for accuracy and how to turn your code into stand alone scripts, or programs, 
 that you can run from the command line.
 
-Unit Testing Concepts
----------------------
+## Unit Testing Concepts
 
 As practicing scientists, we would never trust a lab measurement that we made 
 with uncalibrated instruments. Similarly, as computational scientists, we 
@@ -44,8 +50,7 @@ touch it" phenomena.
 In this lesson, we're going to use the simple and very popular `nose` package 
 to write and run our tests.
 
-A Unit Testing Example
-----------------------
+## A Unit Testing Example
 
 We'll practice unit testing using a function that we've already written to 
 extract the mean number of animals seen per sighting from a csv file. First, 
@@ -309,8 +314,7 @@ Example:
 
 __BONUS__ If there is time, write some tests that will pass for a different csv file.
 
-Making a Standalone Script
---------------------------
+## Making a Standalone Script
 
 Now that our module has been tested, lets turn this program into a standalone 
 script that we can run from the command line. This takes very little additional 
