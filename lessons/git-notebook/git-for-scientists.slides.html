@@ -1863,6 +1863,7 @@ $ git config --global core.editor &quot;&#39;C:/Program Files (x86)/Notepad++/no
     <section>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>While we're at it, let's configure it to use colors, which is helpful:</p>
+<pre><code>$ git config --global color.ui &quot;auto&quot;</code></pre>
 </div></section>
     </section><section>
     <section>
@@ -1951,6 +1952,7 @@ $ cd science</code></pre>
 <div class="text_cell_render border-box-sizing rendered_html">
 <pre><code>$ git init</code></pre>
 <p>or</p>
+<pre><code>$ git init science</code></pre>
 </div>
     </div></section>
     </section><section>
@@ -1960,7 +1962,7 @@ $ cd science</code></pre>
 </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
-
+<pre><code>$ ls -a</code></pre>
 </div>
     </div><div class="fragment">
     
@@ -1977,6 +1979,7 @@ $ cd science</code></pre>
     <section>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>To check what is going on</p>
+<pre><code>$ git status</code></pre>
 </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -1994,7 +1997,7 @@ nothing to commit (create/copy files and use &quot;git add&quot; to track)</code
 </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
-
+<pre><code>$ echo &quot;Cogito ergo sum&quot; &gt; cogito.txt</code></pre>
 </div>
     </div><div class="fragment">
     
@@ -2019,7 +2022,7 @@ nothing to commit (create/copy files and use &quot;git add&quot; to track)</code
     </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
-
+<pre><code>$ git add cogito.txt</code></pre>
 </div>
     </div><div class="fragment">
     
@@ -2045,6 +2048,7 @@ nothing to commit (create/copy files and use &quot;git add&quot; to track)</code
     
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Type:</p>
+<pre><code>$ git commit</code></pre>
 </div>
     </div><div class="fragment">
     
@@ -2117,6 +2121,7 @@ nothing to commit (create/copy files and use &quot;git add&quot; to track)</code
     <section>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>To see the history of the repo, you can always type:</p>
+<pre><code>$ git log</code></pre>
 </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -2134,12 +2139,13 @@ Date:   Sun Apr 28 12:12:12 2013 -0700
 </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
-
+<pre><code>$echo &quot;Edo ergo sum&quot; &gt;&gt; cogito.txt </code></pre>
 </div>
     </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>What has changed?</p>
+<pre><code>$git diff</code></pre>
 </div>
     </div><div class="fragment">
     
@@ -2156,7 +2162,7 @@ index 01c7cba..9084743 100644
     </section><section>
     <section>
 <div class="text_cell_render border-box-sizing rendered_html">
-
+<pre><code>$ git status</code></pre>
 </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -2173,7 +2179,7 @@ no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&q
     </section><section>
     <section>
 <div class="text_cell_render border-box-sizing rendered_html">
-
+<pre><code>$ git commit </code></pre>
 </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -2193,16 +2199,19 @@ no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&q
 <p>We could run:</p>
 <pre><code>$ git add cogito.txt </code></pre>
 <p>Followed by:</p>
+<pre><code>$ git commit       </code></pre>
 </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>A shortcut is given by:</p>
+<pre><code>$ git commit -a</code></pre>
 </div>
     </div></section>
     </section><section>
     <section>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>After doing that:</p>
+<pre><code>$ git status</code></pre>
 </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -2212,7 +2221,7 @@ nothing to commit (working directory clean)</code></pre>
     </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
-
+<pre><code>$ git log</code></pre>
 </div>
     </div><div class="fragment">
     
@@ -2314,19 +2323,6 @@ Date:   Sun Apr 28 12:12:12 2013 -0700
 <li>Make commits as you go along</li>
 <li>Remove this second file (Take a look at <code>git help rm</code>)</li>
 </ul>
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre>
-</pre></div>
-
-</div>
-</div>
-
 </div></section>
     </section><section>
     <section>
@@ -2347,7 +2343,7 @@ In&nbsp;[]:
 </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
-
+<pre><code>$ git branch testing</code></pre>
 </div>
     </div><div class="fragment">
     
@@ -2357,7 +2353,7 @@ In&nbsp;[]:
     </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
-
+<pre><code>$ git checkout testing</code></pre>
 </div>
     </div></section>
     </section><section>
@@ -2374,7 +2370,7 @@ In&nbsp;[]:
 </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
-
+<pre><code>$less .git/HEAD</code></pre>
 </div>
     </div><div class="fragment">
     
@@ -2384,7 +2380,7 @@ In&nbsp;[]:
     </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
-
+<pre><code>$less .git/refs/heads/testing </code></pre>
 </div>
     </div><div class="fragment">
     
@@ -2408,7 +2404,9 @@ In&nbsp;[]:
 <div class="text_cell_render border-box-sizing rendered_html">
 <pre><code>$ echo &quot;dx/dy=(x2-x1)/(y2-y1)&quot; &gt; geometry.txt
 
-$ git add geometry.txt</code></pre>
+$ git add geometry.txt
+
+$ git status</code></pre>
 </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -2471,7 +2469,8 @@ Date:   Sun Apr 28 12:12:12 2013 -0700
     </section><section>
     <section>
 <div class="text_cell_render border-box-sizing rendered_html">
-
+<pre><code>$git checkout master
+    Switched to branch &#39;master&#39;</code></pre>
 </div></section>
     </section><section>
     <section>
@@ -2480,13 +2479,15 @@ Date:   Sun Apr 28 12:12:12 2013 -0700
 </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
-
+<pre><code>$ ls
+cogito.txt</code></pre>
 </div>
     </div></section>
     </section><section>
     <section>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>If we do some more work here:</p>
+<pre><code>$ echo &quot;Non pane solo&quot; &gt;&gt; cogito.txt </code></pre>
 </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -2595,10 +2596,7 @@ function parse_git_branch {
   echo &quot;(&quot;${ref#refs/heads/}&quot;)&quot;
 }
 
-PS1=&quot;\h:\W$RED \$(parse_git_branch)$NO_COLOR $&quot;
-
-PS2=&quot;&gt;&quot;</code></pre>
-<p>Conveniently available here: http://is.gd/git_aware</p>
+PS1=&quot;\h:\W$RED \$(parse_git_branch)$NO_COLOR $&quot;</code></pre>
 </div></section>
     </section><section>
     <section>
@@ -2644,7 +2642,7 @@ PS2=&quot;&gt;&quot;</code></pre>
 </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
-
+<pre><code>$ git checkout -b nap</code></pre>
 </div>
     </div></section>
     </section><section>
@@ -2753,7 +2751,9 @@ Non pane solo</code></pre>
 </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
-<pre><code>$ git add cogito.txt</code></pre>
+<pre><code>$ git add cogito.txt
+
+$ git commit </code></pre>
 </div>
     </div></section>
     </section><section>
@@ -2886,22 +2886,22 @@ Conflicts:
     </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>https://github.com/scipy/scipy</p>
+<p><a href="https://github.com/scipy/scipy">scipy</a></p>
 </div>
     </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>https://github.com/bundestag/gesetze</p>
+<p><a href="https://github.com/bundestag/gesetze">The German Federal legal code</a></p>
 </div>
     </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>https://github.com/vistalab</p>
+<p><a href="https://github.com/vistalab">My lab</a></p>
 </div>
     </div><div class="fragment">
     
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Get a free micro account here: https://github.com/edu</p>
+<p>Get a free micro account <a href="https://github.com/edu">here</a></p>
 </div>
     </div></section>
     </section><section>
