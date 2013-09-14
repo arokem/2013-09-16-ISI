@@ -6,9 +6,6 @@ bootcamp_slug:  2013-09-16-ISI
 title: Unit testing and Standalone Scripts
 ---
 
-
-# Unit Testing and Standalone Scripts
-
 ## Introduction
 
 Now that you understand the basics of programming in Python, we'll move on to 

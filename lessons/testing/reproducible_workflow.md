@@ -3,11 +3,8 @@ layout: lesson
 root: ../..
 github_username: arokem
 bootcamp_slug:  2013-09-16-ISI
-title: Reproducible workflow
+title: Creating a Reproducible Workflow 
 ---
-
-
-# Creating a Reproducible Workflow
 
 ## Introduction
 
