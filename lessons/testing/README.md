@@ -52,10 +52,10 @@ to write and run our tests.
 
 ## A Unit Testing Example
 
-We'll practice unit testing using a function that we've already written to 
-extract the mean number of animals seen per sighting from a csv file. First, 
-let's place this function in an external module. To do this, copy the code 
-below into a text file in this directory, and name it `mean_sightings.py`.
+We'll practice unit testing using a function that we've already written to
+extract the mean number of animals seen per sighting from a [csv file](./sightings_tab_sm.csv). First, let's place this function in an external module. To do this,
+copy the code below into a text file in this directory, and name it
+`mean_sightings.py`.
 
 	import matplotlib.mlab as ml
 	import numpy as np
