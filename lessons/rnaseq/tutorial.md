@@ -7,12 +7,10 @@ title: RNASeq Workflow Module
 ---
 **Material by Rajiv Mayani, Jennifer Herstein, Karan Vahi**
 
-## RNASeq Project
+## RseqFlow
 
-**@@@To be updated by Andrew and Jim@@@**
-
-The [RSeqFlow](http://genomics.isi.edu) is an RNA-Seq analysis
-pipeline, which offers an express implementation of analysis steps. It
+[RseqFlow](http://genomics.isi.edu) is an RNASeq analysis
+pipeline which offers an express implementation of analysis steps. It
 can perform pre and post mapping quality control (QC) for sequencing
 data, calculate expression levels for uniquely mapped reads, identify
 differentially expressed genes, and convert file formats for ease of
@@ -41,22 +39,41 @@ services and databases accessed, data sets used, etc.
 The Pegasus Workflow Management Service was adopted to manage the
 workflow's operations. It helps workflow execute in different kinds of
 different environments including desktops, campus clusters, grids, and
-clouds. The Pegasus was deployed in Virtual Machine, which exempted
+clouds. The Pegasus RseqFlow pipeline was deployed in a Virtual Machine, which exempts
 users from complex installation and configuration. If users want to
-use their own cluster without VM, they can just use the VM as a submit
+deploy on their own cluster, they can use the VM as a submit
 machine to submit jobs into the cluster. 
 
 This tutorial walks through the steps of creating and running the
-**Expression Estimation** Pipeline through Pegasus. The Virtual machine
-has the input dataset for the tutorial workflow and all the
+**Expression Estimation** pipeline through Pegasus. The Virtual Machine
+has an input dataset for the tutorial workflow and all the
 executables preinstalled. 
 
-**@@@Andrew: Need information on the EE pipeline, what it does@@@.**
+The RseqFlow Expression Estimation (EE) pipeline implements 
+expression estimation at gene, exonic, and splice junction levels 
+based on the alignment of reads to the transcriptome. The user 
+supplies the pipeline with a gene annotation file, a FASTA 
+reference file of transcriptome sequences and a FASTQ RNASeq 
+dataset.
 
+The EE pipeline aligns the FASTQ dataset to the transcriptome and 
+keeps uniquely mapped reads for downstream analysis, i.e. those 
+that align only to a single position in the transcriptome 
+reference. Multi-mapped reads, those that align to multiple 
+positions, are eliminated. The annotation file and the alignment 
+output files are split into separate per chromosome files for 
+faster parallel processing at the end of which the results are 
+then merged back into a single file. Expression levels of genes, 
+exons and splice junctions are calculated based on the number of 
+unique reads aligned. For genes and exons, RPKM (Number of reads 
+Per Kilobases per Million mapped reads) is calculated, and for 
+splice junctions, RPM (Number of reads Per Million mapped reads) 
+is calculated. The final output consists of three expression 
+files, one each for genes, exons, and splice junctions.
 
 The schematic of the EE pipeline is shown below
 
-![RNASQ Expression Estimation Workflow](./images/rnaseq-expression-estimation.jpg "RNASEQ EE Workflow")
+![RNAseq Expression Estimation Workflow](./images/rnaseq-expression-estimation.jpg "RNASeq EE Workflow")
 
 
 All of the steps in this tutorial are performed on the
@@ -73,13 +90,13 @@ font, like this:
 Where *[user@host dir]$* is the terminal prompt, the text you should
 type is "you type this", and the output you should get is "you get
 this". The terminal prompt will be abbreviated as $. Because some of
-the outputs are long, we don’t always include everything. Where the
+the outputs are long, we don't always include everything. Where the
 output is truncated we will add an ellipsis '...' to indicate the
 omitted output. 
 
 **If you are having trouble with this tutorial, or anything else related
-to RSEQFLOW, you can contact the Pegasus Users mailing list at
-<rseqflow@isi.edu> to get help.** 
+to RseqFlow , you can contact the Pegasus Users mailing list at
+<RseqFlow @isi.edu> to get help.** 
 
 ## Getting started
 
@@ -94,12 +111,12 @@ tutorial.
 
 ## Generating the workflow
 
-In this tutorial, we will generating a EE workflow that runs across
-chromosomes 1-22 , X, Y and M. The schema of the workflow that is
-generated is the same as shown above. It takes in as input 
+In this tutorial, we will generate an EE workflow that runs across
+chromosomes 1-22, X, Y and M. The schema of the workflow that is
+generated is the same as shown above. It takes as input 
 
-* fastq file
-* 2 reference files, one of which is a fasta file and the other is an
+* a FASTQ file of RNAseq reads
+* 2 reference files, a FASTA file of transcript sequences and a GTF
   annotation file.
 
 In the VM, the input data (451 MB) for the tutorial is present here
@@ -112,17 +129,17 @@ GENCODE_V14_annotation.gtf  SEP034_AAGGGA_L002_R1-75Kreads.fastq  ucsc_gencode.v
 
 The workflow takes about 20-30 minutes to run in this VM.
 
-In order to run the RSEQFLOW EE pipeline on this input dataset we need
+In order to run the RseqFlow EE pipeline on this input dataset we need
 to generate a description of the workflow that can be executed through
-the workflow system. We will run the RSEQFLOW workflow generator
+the workflow system. We will run the RseqFlow workflow generator
 *expression_estimation.py* to generate this description.
 
 The VM has a helper generate_dax.sh script that passes the right
-argumetns to the workflow generator for the canned example.
+arguments to the workflow generator for the canned example.
 
 ```
-cd /rnaseq/ee/
- ./generate_dax.sh rnaseq.dax
+[tutorial@localhost data]$ cd /rnaseq/ee/
+[tutorial@localhost ee]$ ./generate_dax.sh rnaseq.dax
 Generating Pegasus DAX
 
 + expression_estimation.py --output-prefix prefix --unique --fastq SEP034_AAGGGA_L002_R1-75Kreads.fastq --transcriptome ucsc_gencode.v14_transcripts.fa --annotation GENCODE_V14_annotation.gtf --bin-dir bin --dax rnaseq.dax --verbose
@@ -141,11 +158,11 @@ to specify the basename of the input files. The --bin-dir option
 specifies where all the executables required for this workflow are
 installed. 
 
-The executables referred to by this workflow are in the bin
+The executables referred to by this workflow are in the bin directory.
 
 
 ```
-[tutorial@localhost ee]$ ls -lh /rnaseq/ee/bin
+[tutorial@localhost ee]$ ls /rnaseq/ee/bin
 
 bowtie2-align           GeneExpressionLevel.py
 SplitByChromosome_for_transcriptomeSamFile.py
@@ -165,7 +182,7 @@ ModifyExonIndex.py
 Pegasus reads workflow descriptions from DAX files. The term "DAX" is
 short for "Directed Acyclic Graph in XML". DAX is an XML file format
 that has syntax for expressing jobs, arguments, files, and
-dependencies.  Lets look at the generated DAX for the workflow
+dependencies.  Let's look at the generated DAX for the workflow
 
 
 ```
@@ -176,12 +193,12 @@ more rnaseq.dax
 The generated DAX has three main sections
 
 1. The locations of the executables that are referred to by the
-worklfow. These can be in a separate tranformation catalog file also.
+workflow. These can be in a separate tranformation catalog file also.
 
-2. The jobs making up the workflow. Notice, how the job only refer to
+2. The jobs making up the workflow. Notice, how jobs only refer to
 the input and output files by logical identifiers.
 
-3. The edges between the jobs in the workflow that specifies the
+3. The edges between the jobs in the workflow that specify the
 underlying DAG ( Directed Acyclic Graph).
 
 
@@ -196,7 +213,7 @@ more execution sites.
 
 The pegasus-plan command is used to plan a workflow. This command
 takes quite a few arguments, so we created a run_dax.sh wrapper
-script that has all of the arguments required for the RSEQFlow EE
+script that has all of the arguments required for the RseqFlow EE
 workflow: 
 
 ```
@@ -272,7 +289,7 @@ The presence of the bt2 files enables Pegasus to skip the
 bowtie2_transcriptome_index_ID0000003 job as the outputs for it
 already exist.
 
-When you ran rundax.sh in the log you would have seen the following:
+When you ran run_dax.sh in the log you would have seen the following:
 
 ```
 2013.09.13 00:15:36.802 EDT: [INFO] event.pegasus.reduce dax.id expression_estimation_prefix_0  - STARTED 
@@ -304,15 +321,15 @@ UNREADY   READY     PRE  QUEUED    POST SUCCESS FAILURE %DONE
 Summary: 1 DAG total (Running:1)
 ```
 
-This command shows the workflow (diamond-0) and the running jobs (in
-the above output it shows the two findrange jobs). It also gives
+This command shows the workflow and the running jobs (in
+the above output it shows the expression_estimation_prefix-0 job). It also gives
 statistics on the number of jobs in each state and the percentage of
 the jobs in the workflow that have finished successfully. 
 
 Use the watch option  to continuously monitor the workflow:
 
 ```
-$  pegasus-status -w submit/tutorial/pegasus/expression_estimation_prefix/run0001/
+[tutorial@localhost ee]$ pegasus-status -w submit/tutorial/pegasus/expression_estimation_prefix/run0001/
 ...
 ```
 
@@ -335,7 +352,7 @@ transformations in the workflow and shows all of the executables that
 were invoked by the workflow: 
 
 ```
-$ ls -lht outputs/
+[tutorial@localhost ee]$ ls -lht outputs/
 -rw-r--r-- 1 tutorial tutorial  111 Sep 13 01:36 outputs/prefix_whole_JunctionExpressionLevel_unique.txt
 -rw-r--r-- 1 tutorial tutorial 2.1M Sep 13 01:36 outputs/prefix_whole_ExonExpressionLevel_unique.txt
 -rw-r--r-- 1 tutorial tutorial 278K Sep 13 01:36 outputs/prefix_whole_GeneExpressionLevel_unique.txt
@@ -343,8 +360,8 @@ $ ls -lht outputs/
 -rw-r--r-- 1 tutorial tutorial   29 Sep 13 01:27 outputs/prefix_SEP034_AAGGGA_L002_R1-75Kreads.fastq
 ```
 
-Of these the first three files (with prefix prefix_whole_) will be of
-interest to the scientists.
+Of these, the first three files (with prefix prefix\\_whole\\_) will be of
+interest to scientists.
 
 ## Collecting Statistics
 
