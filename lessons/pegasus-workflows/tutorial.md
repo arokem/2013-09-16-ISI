@@ -99,7 +99,7 @@ In order to reduce the amount of work required to get started we have
 provided several virtual machines that contain all of the software
 required for this tutorial. Virtual machine images are provided for
 VirtualBox. Information about starting the bootcamp VM is in the
-[Virtualbox Lesson](../virtualbox/tutorial.md). Please follow the
+[Virtualbox Lesson](../virtualbox/tutorial.html). Please follow the
 instructions for starting the VM before continuing with this
 tutorial. 
 
