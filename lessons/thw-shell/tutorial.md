@@ -662,6 +662,102 @@ Figure out how to get `wc` to print the length of the longest line in
 
 * * * *
 
+
+## Searching files
+
+You can search the contents of a file using the command `grep`. The
+`grep` program is very powerful and useful especially when combined
+with other commands by using the pipe. Navigate to the `bert`
+directory. Every data file in this directory has a line which says
+"Range". The range represents the smallest frequency range that can be
+discriminated. Lets list all of the ranges from the tests that bert
+conducted:
+
+    grep Range *
+
+* * * * 
+**Short Exercise**
+
+Create an executable script called `smallestrange` in the `data`
+directory, that is similar to the `smallest` script, but prints the
+file containing the file with the smallest Range. Use the commands
+`grep`, `sort`, and `tail` to do this.
+
+* * * * 
+
+## Finding files
+
+The `find` program can be used to find files based on arbitrary
+criteria. Navigate to the `data` directory and enter the following
+command:
+
+    find . -print
+
+This prints the name of every file or directory, recursively, starting
+from the current directory. Let's exclude all of the directories:
+
+    find . -type f -print
+
+This tells `find` to locate only files. Now try these commands:
+
+    find . -type f -name "*1*"
+    find . -type f -name "*1*" -or -name "*2*" -print
+    find . -type f -name "*1*" -and -name "*2*" -print
+
+The `find` command can acquire a list of files and perform some
+operation on each file. Try this command out:
+
+    find . -type f -exec grep Volume {} \;
+
+This command finds every file starting from `.`. Then it searches each
+file for a line which contains the word "Volume". The `{}` refers to
+the name of each file. The trailing `\;` is used to terminate the
+command.  This command is slow, because it is calling a new instance
+of `grep` for each item the `find` returns.
+
+A faster way to do this is to use the `xargs` command:
+
+    find . -type f -print | xargs grep Volume
+
+`find` generates a list of all the files we are interested in, 
+then we pipe them to `xargs`.  `xargs` takes the items given to it 
+and passes them as arguments to `grep`.  `xargs` generally only creates
+a single instance of `grep` (or whatever program it is running).
+
+* * * * 
+**Short Exercise**
+
+Navigate to the `data` directory. Use one `find` command to perform each
+of the operations listed below (except number 2, which does not
+require a `find` command):
+
+1.  Find any file whose name is "NOTES" within `data` and delete it 
+
+2.  Create a new directory called `cleaneddata`
+
+3.  Move all of the files within `data` to the `cleaneddata` directory
+
+4.  Rename all of the files to ensure that they end in `.txt` (note:
+    it is ok for the file name to end in `.txt.txt`
+
+Hint: If you make a mistake and need to start over just do the
+following:
+
+1.  Navigate to the `shell` directory
+
+2.  Delete the `data` directory
+
+3.  Enter the command: `git checkout -- data` You should see that the
+    data directory has reappeared in its original state
+
+**BONUS**
+
+Redo exercise 4, except rename only the files which do not already end
+in `.txt`. You will have to use the `man` command to figure out how to
+search for files which do not match a certain name. 
+
+* * * * 
+
 ### The awesome power of the Pipe
 
 Suppose I wanted to only see the total number of character, words, and
@@ -835,101 +931,6 @@ you enter:
 
 You will see that the file name is green and the permissions have changed. 
 Congratulations, you just created your first shell script!
-
-## Searching files
-
-You can search the contents of a file using the command `grep`. The
-`grep` program is very powerful and useful especially when combined
-with other commands by using the pipe. Navigate to the `bert`
-directory. Every data file in this directory has a line which says
-"Range". The range represents the smallest frequency range that can be
-discriminated. Lets list all of the ranges from the tests that bert
-conducted:
-
-    grep Range *
-
-* * * * 
-**Short Exercise**
-
-Create an executable script called `smallestrange` in the `data`
-directory, that is similar to the `smallest` script, but prints the
-file containing the file with the smallest Range. Use the commands
-`grep`, `sort`, and `tail` to do this.
-
-* * * * 
-
-## Finding files
-
-The `find` program can be used to find files based on arbitrary
-criteria. Navigate to the `data` directory and enter the following
-command:
-
-    find . -print
-
-This prints the name of every file or directory, recursively, starting
-from the current directory. Let's exclude all of the directories:
-
-    find . -type f -print
-
-This tells `find` to locate only files. Now try these commands:
-
-    find . -type f -name "*1*"
-    find . -type f -name "*1*" -or -name "*2*" -print
-    find . -type f -name "*1*" -and -name "*2*" -print
-
-The `find` command can acquire a list of files and perform some
-operation on each file. Try this command out:
-
-    find . -type f -exec grep Volume {} \;
-
-This command finds every file starting from `.`. Then it searches each
-file for a line which contains the word "Volume". The `{}` refers to
-the name of each file. The trailing `\;` is used to terminate the
-command.  This command is slow, because it is calling a new instance
-of `grep` for each item the `find` returns.
-
-A faster way to do this is to use the `xargs` command:
-
-    find . -type f -print | xargs grep Volume
-
-`find` generates a list of all the files we are interested in, 
-then we pipe them to `xargs`.  `xargs` takes the items given to it 
-and passes them as arguments to `grep`.  `xargs` generally only creates
-a single instance of `grep` (or whatever program it is running).
-
-* * * * 
-**Short Exercise**
-
-Navigate to the `data` directory. Use one `find` command to perform each
-of the operations listed below (except number 2, which does not
-require a `find` command):
-
-1.  Find any file whose name is "NOTES" within `data` and delete it 
-
-2.  Create a new directory called `cleaneddata`
-
-3.  Move all of the files within `data` to the `cleaneddata` directory
-
-4.  Rename all of the files to ensure that they end in `.txt` (note:
-    it is ok for the file name to end in `.txt.txt`
-
-Hint: If you make a mistake and need to start over just do the
-following:
-
-1.  Navigate to the `shell` directory
-
-2.  Delete the `data` directory
-
-3.  Enter the command: `git checkout -- data` You should see that the
-    data directory has reappeared in its original state
-
-**BONUS**
-
-Redo exercise 4, except rename only the files which do not already end
-in `.txt`. You will have to use the `man` command to figure out how to
-search for files which do not match a certain name. 
-
-* * * * 
 
 ### Bonus:
 
