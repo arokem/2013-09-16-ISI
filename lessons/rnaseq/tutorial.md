@@ -5,7 +5,7 @@ github_username: arokem
 bootcamp_slug:  2013-09-16-ISI
 title: RNASeq Workflow Module
 ---
-**Material by Rajiv Mayani, Jennifer Herstein, Karan Vahi**
+**Material by Rajiv Mayani, Karan Vahi, Jennifer Herstein, Andrew Clark**
 
 ## RseqFlow
 
@@ -95,7 +95,7 @@ output is truncated we will add an ellipsis '...' to indicate the
 omitted output. 
 
 **If you are having trouble with this tutorial, or anything else related
-to RseqFlow , you can contact the Pegasus Users mailing list at
+to RseqFlow , you can contact the USC RseqFlow mailing list at
 <RseqFlow @isi.edu> to get help.** 
 
 ## Getting started
@@ -435,6 +435,6 @@ Congratulations! You have completed the tutorial. For more information
 on the pipeline, please contact 
 
 
-Please contact the Pegasus Users Mailing list at
+Please contact the USC RseqFlow Mailing list at
 <rseqflow@isi.edu> if you need help. 
 
