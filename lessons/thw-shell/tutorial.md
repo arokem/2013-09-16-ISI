@@ -36,6 +36,24 @@ most important reasons are that:
     your computer. You will also be able to perform many tasks more
     efficiently.
 
+We don't have a lot of time, but I want you to come out of this understanding a few
+key things.  With these you'll have enough power to accomplish 90% of your
+needs at the command prompt and have a good foundation for further learning.
+
+1.  The filesystem has a tree structure composed of files and directories.
+    Where you are in that structure influence how you reference files.
+
+2.  Most shell commands have options that modify their behavior.
+
+3.  The shell has "environment variables" that store information and can affect
+    program behavior.
+
+4.  Shell commands can be combined into scripts and reused.
+
+5.  Files have permission setting that affect which uses can do what which a
+    given file.
+
+
 The shell is just a program and there are many different shell
 programs that have been developed. The most common shell (and the one
 we will use) is called the Bourne-Again SHell (bash). Even if bash is
