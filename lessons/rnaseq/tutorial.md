@@ -96,7 +96,7 @@ omitted output.
 
 **If you are having trouble with this tutorial, or anything else related
 to RseqFlow , you can contact the USC RseqFlow mailing list at
-<RseqFlow @isi.edu> to get help.** 
+<RseqFlow@isi.edu> to get help.** 
 
 ## Getting started
 
