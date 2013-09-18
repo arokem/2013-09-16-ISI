@@ -713,7 +713,7 @@ To enable clustering in pegasus pass the **--cluster** option to pegasus-plan.
 
 Here is how a worklfow looks before and after level based job clustering.
 
-![Pegasus Job Clustering](./images/concepts-job-clustering.jpg "Pegasus Job Clustering)
+![Pegasus Job Clustering](./images/concepts-job-clustering.jpg "Pegasus Job Clustering")
 
 More details can be found in the Pegasus Documentation [here] (https://pegasus.isi.edu/wms/docs/latest/reference.php#job_clustering).
 
