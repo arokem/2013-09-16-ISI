@@ -17,10 +17,13 @@ differentially expressed genes, and convert file formats for ease of
 visualization.  
 
 
-
 ## Introduction
 Use a browser to open the tutorial on github, located at:
     http://github.com/{{page.github_username}}/{{page.bootcamp_slug}}/lessons/rnaseq/tutorial.html
+
+A presentation on RNASeq that gives a high level overview of the
+process can be found 
+[here](./RNASeq-JimKnowles2013.pdf "Introduction to RseqFlow")
 
 
 A workflow is an automatic process, during which, data, information or
