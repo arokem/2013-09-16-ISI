@@ -63,6 +63,11 @@ user to debug the workflow in case of non-recoverable failures.
 Use a browser to open the tutorial on github, located at:
     http://github.com/{{page.github_username}}/{{page.bootcamp_slug}}
 
+A presentation on Pegasus that gives an introduction to workflows and
+Pegasus and will be presented by the instructor can be found
+[here](./Pegasus-SWC-final.pdf "Introduction to Workflows")
+
+
 This tutorial will take you through the steps of creating and running
 a simple workflow using Pegasus. This tutorial is intended for new
 users who want to get a quick overview of Pegasus concepts and
